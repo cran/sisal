@@ -14,12 +14,12 @@
   laser generated data and Poland electricity load data.
 }
 \usage{
-sisalData(dataset = c("laser", "laser.cont", "poland"), verify = TRUE)
+sisalData(dataset = c("poland", "laser", "laser.cont"), verify = TRUE)
 }
 \arguments{
 
-  \item{dataset}{ A \code{character} string: \code{"laser"} (default),
-    \code{"laser.cont"} or \code{"poland"}.  }
+  \item{dataset}{ A \code{character} string: \code{"poland"} (default),
+    \code{"laser"} or \code{"laser.cont"} (see \sQuote{Note}).  }
 
   \item{verify}{ A \code{logical} flag.  If \code{TRUE}, verifies the
     integrity of the downloaded data by computing a checksum and
@@ -33,6 +33,11 @@ sisalData(dataset = c("laser", "laser.cont", "poland"), verify = TRUE)
 
   This function requires an Internet connection.  The download may fail
   due to a problem such as the remote server being unavailable.
+}
+\note{
+  Checked on 2020-02-14, the Santa Fe datasets are no longer available
+  at their previous location. Attempting to download them with this
+  function will result in an error.
 }
 \value{
 
@@ -50,14 +55,12 @@ sisalData(dataset = c("laser", "laser.cont", "poland"), verify = TRUE)
 \references{
 
   The Santa Fe Time Series Competition Data / Data Set A: Laser
-  generated
-  data. \url{http://www-psych.stanford.edu/~andreas/Time-Series/SantaFe.html#setA}.
-  \acronym{URL} accessed on 2015-10-09.
+  generated data. Availability unknown (2020-02-14).
 
   Environmental and Industrial Machine Learning Group / Datasets /
   Poland Electricity
   Load. \url{http://research.ics.aalto.fi/eiml/datasets.shtml}.
-  \acronym{URL} accessed on 2015-10-09.
+  \acronym{URL} accessed on 2020-02-14.
 
 }
 \author{
@@ -68,9 +71,8 @@ sisalData(dataset = c("laser", "laser.cont", "poland"), verify = TRUE)
   \code{\link{testSisal}}
 }
 \examples{\dontrun{
-foo <- sisalData("laser")
-length(foo) # 1000
-mean(foo)   # 59.894
-sd(foo)     # 46.87543}
+foo <- sisalData("poland")
+length(foo$learn) # 1400
+length(foo$test)  # 201}
 }
 \keyword{utilities}

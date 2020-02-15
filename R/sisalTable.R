@@ -1,7 +1,7 @@
 ### File R/sisalTable.R
 ### This file is part of the sisal package for R.
 ###
-### Copyright (C) 2015 Aalto University
+### Copyright (C) 2015, 2020 Aalto University
 ###
 ### This program is free software; you can redistribute it and/or modify
 ### it under the terms of the GNU General Public License as published by
@@ -361,7 +361,7 @@ validDetails.sisalTable <- function(x, ...) {
                is.finite(xAxisHeight) && xAxisHeight >= 0 &&
                inherits(xAxisSide, "unit") && length(xAxisSide) == 1 &&
                is.logical(xAxisNotNA) && length(xAxisNotNA) >= 1 &&
-               is.finite(xAxisNotNA) && is.vector(xAxisLabels) &&
+               all(is.finite(xAxisNotNA)) && is.vector(xAxisLabels) &&
                length(xAxisLabels) >= 1 && is.character(xNames) &&
                length(xNames) == nCols))
     stopifnot(!resizeAxes || is.null(yAxisSide) ||
@@ -369,7 +369,7 @@ validDetails.sisalTable <- function(x, ...) {
                is.finite(yAxisHeight) && yAxisHeight >= 0 &&
                inherits(yAxisSide, "unit") && length(yAxisSide) == 1 &&
                is.logical(yAxisNotNA) && length(yAxisNotNA) >= 1 &&
-               is.finite(yAxisNotNA) && is.vector(yAxisLabels) &&
+               all(is.finite(yAxisNotNA)) && is.vector(yAxisLabels) &&
                length(yAxisLabels) >= 1 && is.character(yNames) &&
                length(yNames) == nRows))
     stopifnot(length(xAxisJust) > 0,

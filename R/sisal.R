@@ -1,7 +1,7 @@
 ### File R/sisal.R
 ### This file is part of the sisal package for R.
 ###
-### Copyright (C) 2015 Aalto University
+### Copyright (C) 2015, 2020 Aalto University
 ###
 ### This program is free software; you can redistribute it and/or modify
 ### it under the terms of the GNU General Public License as published by
@@ -280,6 +280,9 @@ sisal <- function(X, y, Mtimes=100, kfold=10, hbranches=1,
     edges[[1]] <- list(edges=numeric(0))
     if (verbose > 0 && verbose < 2) {
         pb <- txtProgressBar(min = 0, max = D, initial = 0)
+        on.exit(close(pb))
+    } else {
+        pb <- NULL
     }
     pairwise.points <- matrix(0, d, d)
     max.n.new <- max.width * hbranches
@@ -293,11 +296,11 @@ sisal <- function(X, y, Mtimes=100, kfold=10, hbranches=1,
     ## If the function is interrupted, .Random.seed will be restored on.exit.
     if (!exists(".Random.seed", where=1)) {
         set.seed(NULL)
-        on.exit(rm(".Random.seed", pos=1))
+        on.exit(rm(".Random.seed", pos=1), add = TRUE)
         saved.seed <- get(".Random.seed", pos=1)
     } else {
         saved.seed0 <- get(".Random.seed", pos=1)
-        on.exit(assign(".Random.seed", saved.seed0, pos=1))
+        on.exit(assign(".Random.seed", saved.seed0, pos=1), add = TRUE)
         seedOK <- TRUE
         tryCatch(sample(2), warning = function(...) seedOK <<- FALSE)
         if (seedOK) {
@@ -911,7 +914,7 @@ sisal <- function(X, y, Mtimes=100, kfold=10, hbranches=1,
             saved.seed2 <- get(".Random.seed", pos=1, mode="numeric")
         }
         names.old <- names.new[chosen.sets]
-        if (exists("pb", inherits = FALSE)) {
+        if (!is.null(pb)) {
             setTxtProgressBar(pb, value = D - n.selected)
         }
         n.selected <- n.selected - 1
@@ -1176,6 +1179,9 @@ sisal <- function(X, y, Mtimes=100, kfold=10, hbranches=1,
                 nested.rank=nested.rank, branching.useful=branching.useful,
                 warnings=allWarn, n.warn=n.warn)
     class(res) <- c("sisal")
+    if (!is.null(pb)) {
+        close(pb)
+    }
     on.exit() # if the function returns uninterrupted, cancel cleanup measures
     res
 }

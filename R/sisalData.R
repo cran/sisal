@@ -1,7 +1,7 @@
 ### File R/sisalData.R
 ### This file is part of the sisal package for R.
 ###
-### Copyright (C) 2015 Aalto University
+### Copyright (C) 2015, 2020 Aalto University
 ###
 ### This program is free software; you can redistribute it and/or modify
 ### it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 .MD5poland.learn <- "707caa3c7711ff7091b397c36d361c1e"
 .MD5poland.test  <- "ce13f9204de00a362e53c1431370b229"
 
-sisalData <- function(dataset = c("laser", "laser.cont", "poland"),
+sisalData <- function(dataset = c("poland", "laser", "laser.cont"),
                       verify = TRUE) {
 
     dataset2 <- match.arg(dataset)
